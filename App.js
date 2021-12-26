@@ -1,32 +1,52 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Nav from './Nav/NavigationPage';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App() {
-  const NavBarAreaContainer = <View style={styles.SwitchArea}>
-    <Text>Lets see</Text>
-  </View> 
-  return (
-    <View style={styles.container}>
-      {NavBarAreaContainer}
-      <Nav style={styles.NavBarArea}/>
+
+  const NavBar = <View style={styles.NavBarStyle}>
+      <Text>Lets see</Text>
+    </View> 
+  
+  const NotiPage = <LinearGradient 
+    start={{ x: 0.95, y: 0 }} and end={{ x: 0, y: 0.95 }}
+    locations={[0,0.25,0.65]} 
+    colors={['#39A2DB', '#F38BA0','#502064']}
+    style={styles.NotiPageStyle}
+  >
+      <Nav 
+        style={styles.NavIconStyle}
+      /> 
+  </LinearGradient>
+  
+  const ContainerArea = <View style={styles.ContainerAreaStyle}>
+      {NavBar}
+      {NotiPage}
     </View>
-  );
+
+  return (ContainerArea);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  ContainerAreaStyle: {
     display: 'flex',
-    // padding: 20,
     flexDirection: 'column',
-    backgroundColor: 'orange',
+    width: "100%",
+    height: "100%",
+    // backgroundColor: 'orange', //to check the location and how much it covers
   },
-  SwitchArea: {
-    flex: 1, backgroundColor: "blue", marginBottom:20 , 
-    height: 10
+  NavBarStyle: {
+    width: "100%",
+    height: "8%",
+    backgroundColor: "blue",
   },
-  NavBarArea: {
-    flex: 2, backgroundColor: "red", height: '90%'
+  NotiPageStyle: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // backgroundColor: "red",
   },
 });
