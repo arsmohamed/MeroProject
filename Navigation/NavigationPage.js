@@ -13,84 +13,29 @@ export default function Nav (props) {
   /********************************************  Animation Function *********************************************************/
   const [ChangeIcon, setChangeIcon] = useState(false); // to change the icon 
   const animation = useRef(new Animated.Value(0)).current;
-  const mode = new Animated.Value(0);
-  const buttonSize = new Animated.Value(1);
-
+  console.log(animation)
   const [open, setOpen] = useState(0)
-  const mero = useRef(new Animated.Value(0)).current;
-
   const toggleMenu = () => {
-    Animated.sequence([
-      Animated.timing(buttonSize, {
-          toValue: 0.95,
-          duration: 200
-      }),
-      Animated.timing(buttonSize, {
-          toValue: 1
-      }),
-      Animated.timing(mode, {
-          toValue: mode._value === 0 ? 1 : 0
-      })
-    ]).start();
-    // const toValue = open ? 0 : 1;
+    const toValue = open ? 0 : 1;
     
-    //   Animated.spring( animation, {
-    //     toValue,
-    //     friction: 5
-    //   }).start();
-    //   setOpen(!open);
-    //   setChangeIcon(true)
+      Animated.spring( animation, {
+        toValue,
+        friction: 5
+      }).start();
+      setOpen(!open);
+      setChangeIcon(true)
   }
-  // const pinStyle = {
-  //   transform: [
-  //     {scale: mero},
-  //     {
-  //       translateY: mero.interpolate({
-  //         inputRange: [0,1],
-  //         outputRange: [0,-80]
-  //       })
-  //     }
-  //   ]
-  // }
-  /********************************************  animation Icons *********************************************************/
-  const thermometerX = mode.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-24, -100]
-  });
-
-  const thermometerY = mode.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-50, -100]
-  });
-
-  const timeX = mode.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-24, -24]
-  });
-
-  const timeY = mode.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-50, -150]
-  });
-
-  const pulseX = mode.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-24, 50]
-  });
-
-  const pulseY = mode.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-50, -100]
-  });
-
-  const rotation = mode.interpolate({
-      inputRange: [0, 1],
-      outputRange: ["0deg", "45deg"]
-  });
-
-  const sizeStyle = {
-      transform: [{ scale: buttonSize }]
-  };
+  const pinStyle = {
+    transform: [
+      {scale: animation},
+      {
+        translateY: animation.interpolate({
+          inputRange: [0,1],
+          outputRange: [0,-80]
+        })
+      }
+    ]
+  }
   /********************************************  Notification Icons *********************************************************/
   const AddIcon = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
@@ -122,7 +67,7 @@ export default function Nav (props) {
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
-      style={[styles.NavIconStyle, styles.secondary, {left: thermometerX, top: thermometerY}]}
+      style={[styles.NavIconStyle, styles.secondary]}
     >
       <TouchableWithoutFeedback>
         <Animated.View >
