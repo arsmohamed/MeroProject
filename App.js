@@ -13,7 +13,7 @@ export default class App extends Component {
       start={{ x: 0.95, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.65]} colors={['#39A2DB', '#F38BA0','#502064']}
     >
-      <IconNav/>
+      <IconNav style={{bottom: "10%"}}/>
     </LinearGradient>
   
   
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flex: 1,
-    // alignItems: 'center',
+    alignItems: 'center',
     // justifyContent: 'center',
   },
 });
