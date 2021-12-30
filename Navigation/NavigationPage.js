@@ -16,25 +16,8 @@ export default function Nav (props) {
   console.log(animation)
   const [open, setOpen] = useState(0)
   const toggleMenu = () => {
-    const toValue = open ? 0 : 1;
-    
-      Animated.spring( animation, {
-        toValue,
-        friction: 5
-      }).start();
-      setOpen(!open);
+
       setChangeIcon(true)
-  }
-  const pinStyle = {
-    transform: [
-      {scale: animation},
-      {
-        translateY: animation.interpolate({
-          inputRange: [0,1],
-          outputRange: [0,-80]
-        })
-      }
-    ]
   }
   /********************************************  Notification Icons *********************************************************/
   const AddIcon = <LinearGradient 
@@ -128,25 +111,12 @@ const styles = StyleSheet.create({
     IconsPageAre: {
       alignItems: "center",
       position: "absolute",
-      // bottom: 0
-      // display: 'flex',
-      // width: "100%",
-      // height: "100%",
-      // position: 'absolute',
-    },
-    NavIconStyle1: {
-      bottom: 1,
-      margin: "2.5%",
-      marginBottom: "12.5%",
-      position: 'absolute',
-      bottom:0,
-      right:0, 
     },
     NavIconStyle: {
       width: 60,
       height: 60,
       borderRadius: 60 / 2,
-      position: 'absolute', 
+      // position: 'absolute', 
       alignItems: 'center',
       justifyContent: 'center',
       shadowRadius: 10,
