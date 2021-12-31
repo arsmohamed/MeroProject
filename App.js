@@ -91,6 +91,5 @@ const styles = StyleSheet.create({
   ProfileBarStyle: {
     width: "100%",
     height: "8%",
-    // backgroundColor: "blue",
   },
 });
