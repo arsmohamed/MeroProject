@@ -13,7 +13,7 @@ export default class App extends Component {
       start={{ x: 0.95, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.65]} colors={['#39A2DB', '#F38BA0','#502064']}
     >
-      <IconNav style={{bottom: "10%"}}/>
+      <IconNav style={{bottom: "15%"}}/>
     </LinearGradient>
   
   

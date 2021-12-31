@@ -1,5 +1,5 @@
 import  React, {useState, useRef} from 'react';
-import { StyleSheet, Text, View, Animated, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, Animated, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFA from 'react-native-vector-icons/FontAwesome5';
@@ -13,8 +13,23 @@ export default function Nav (props) {
   /********************************************  Animation Function *********************************************************/
 
   const animation = useRef(new Animated.Value(0)).current;
-  const mode = useRef(new Animated.Value(0)).current;
-   
+
+  const fadeIn = () => {
+    // Will change animation value to 1 in 5 seconds
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 5000
+    }).start();
+  };
+
+  const fadeOut = () => {
+    // Will change animation value to 0 in 3 seconds
+    Animated.timing(animation, {
+      toValue: 0,
+      duration: 3000
+    }).start();
+  };
+
   const [ChangeIcon, setChangeIcon] = useState(false); // to change the icon 
   const [Open1, setOpen] = useState(0); // to change open value 
   
@@ -29,20 +44,12 @@ export default function Nav (props) {
     setChangeIcon(true)
     setOpen(1)  
   }
-  const thermometerX = mode.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-24, -100]
-});
 
-const thermometerY = mode.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-50, -100]
-});
   const Home = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#4651D5','#6548DE','#FF007A']} 
-      style={styles.NavIconStyle} 
+      style={[styles.NavIconStyle, Open1 ? styles.secondary: null]} 
     >
       <TouchableWithoutFeedback onPress={toggleMenu}>
         <Animated.View >
@@ -50,21 +57,7 @@ const thermometerY = mode.interpolate({
         </Animated.View>
       </TouchableWithoutFeedback> 
     </LinearGradient> 
-
-  // const DiaryStyle = {
-  //   transform: [
-  //   {
-  //       scale: animation
-  //     },
-  //     {
-  //         inputRange: [0, 1],
-  //         translateY: animation.interpolate({
-  //             outputRange: [0, -70]
-  //           })
-  //         }
-  //       ]
-  //     }
-            
+    
             
   const chooseIcon = () => {
     setChangeIcon(false)
@@ -85,11 +78,23 @@ const thermometerY = mode.interpolate({
 
   /********************************************  Notification Icons *********************************************************/
 
+  const Home1 = <LinearGradient 
+      start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
+      locations={[0,0.25,0.95]} 
+      colors={['#1C84E4','#1C84DB','#21D7FF']} 
+      style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 245 },  {translateX: -120 }] }]}
+    >
+      <TouchableWithoutFeedback>
+        <Animated.View >
+        <Icon name="home" size={30} color="#FFFF" />
+        </Animated.View>
+      </TouchableWithoutFeedback> 
+    </LinearGradient> 
   const Diary = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
-      style={[styles.NavIconStyle, styles.secondary, {left: thermometerX, top: thermometerY}]}
+      style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: -35 }] }]}
     >
       <TouchableWithoutFeedback>
         <Animated.View >
@@ -102,7 +107,7 @@ const thermometerY = mode.interpolate({
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
-      style={[styles.NavIconStyle, styles.secondary]}
+      style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 50 },  {translateX: -70 }] }]}
     >
       <TouchableWithoutFeedback>
         <Animated.View >
@@ -115,7 +120,7 @@ const thermometerY = mode.interpolate({
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
-      style={[styles.NavIconStyle, styles.secondary]}
+      style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 200 },  {translateX: -70 }] }]}
     >
       <TouchableWithoutFeedback>
         <Animated.View >
@@ -128,7 +133,7 @@ const thermometerY = mode.interpolate({
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
-      style={[styles.NavIconStyle, styles.secondary]}
+      style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 275 },  {translateX: 0 }] }]}
     >
       <TouchableWithoutFeedback>
         <Animated.View >
@@ -137,11 +142,21 @@ const thermometerY = mode.interpolate({
       </TouchableWithoutFeedback> 
     </LinearGradient> 
 
-    const NavIcon = <View style={[styles.IconsPageAre, props.style]}>
-      {Open1? [Meal, Note, Task, Diary] : console.log("is it working ")}
+    const NavIcon = <SafeAreaView style={[styles.IconsPageAre, props.style]}>
+      {
+      // Open1? 
+      [
+        Home1,
+        Meal, 
+        Note, 
+        Task, 
+        Diary
+      ]
+      //  : console.log("is it working ")
+       }
       
       {ChangeIcon ? AddIcon : Home}
-    </View>
+    </SafeAreaView>
 
     return (NavIcon);
   }
@@ -152,6 +167,7 @@ const styles = StyleSheet.create({
     IconsPageAre: {
       alignItems: "center",
       position: "absolute",
+      right: "0%"
     },
     NavIconStyle: {
       width: 60,
@@ -163,15 +179,16 @@ const styles = StyleSheet.create({
       shadowRadius: 10,
       shadowColor: "#F02A4B",
       shadowOffset: 0.3,
-      shadowOffset: { height: 10}
-    },
-    menu: {
-      backgroundColor: "#F82A4B"
+      shadowOffset: { height: 10},
+      right: "20%"
     },
     secondary: {
       width: 48,
       height: 48,
       borderRadius: 48 / 2
-    }
+    },
+    DiaryStyle:{
+      marginBottom: "25%"
+    },
   });
   
