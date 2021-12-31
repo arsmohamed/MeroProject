@@ -34,8 +34,6 @@ export default function Nav (props) {
   const [Open1, setOpen] = useState(0); // to change open value 
   
   const toggleMenu = () => {
-    // const toValue = open1 ? 0 : 1
-
     Animated.spring( animation, {
       toValue: 1,
       friction: 5,
@@ -44,8 +42,15 @@ export default function Nav (props) {
     setChangeIcon(true)
     setOpen(1)  
   }
-
-  const Home = <LinearGradient 
+  const chooseIcon = (props) => {
+    setChangeIcon(false)
+    setOpen(0) 
+    // console.log(props)
+    setChosenPage(props)
+  }
+  const [ChoosePage, setChosenPage] = useState("home");
+  console.log(ChoosePage)
+  const SelectedPage = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#4651D5','#6548DE','#FF007A']} 
@@ -53,16 +58,20 @@ export default function Nav (props) {
     >
       <TouchableWithoutFeedback onPress={toggleMenu}>
         <Animated.View >
-          <Icon name="home" size={50} color="#94B3FD" />
+          {/* <Icon name={ChoosePage} size={50} color="#94B3FD" />  */}
+          
+        {ChoosePage === "home" ? <Icon name={ChoosePage} size={50} color="#94B3FD" /> :
+            ChoosePage === "journal-whills" ? <IconFA name={ChoosePage} size={40} color="#94B3FD" /> :
+            ChoosePage === "tasks" ? <IconFA name={ChoosePage} size={40} color="#94B3FD" />:
+            ChoosePage === "speaker-notes" ? <IconMI name={ChoosePage} size={40} color="#94B3FD" />:
+            ChoosePage === "md-fast-food-outline" ? <IconII name={ChoosePage} size={40} color="#94B3FD" />: 
+            <Icon name="home" size={50} color="#94B3FD" />}       
         </Animated.View>
       </TouchableWithoutFeedback> 
     </LinearGradient> 
     
             
-  const chooseIcon = () => {
-    setChangeIcon(false)
-    setOpen(0) 
-  }
+  
   const AddIcon = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
@@ -78,25 +87,26 @@ export default function Nav (props) {
 
   /********************************************  Notification Icons *********************************************************/
 
-  const Home1 = <LinearGradient 
+  const Home = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
       style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 245 },  {translateX: -120 }] }]}
     >
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={()=>chooseIcon("home")}>
         <Animated.View >
         <Icon name="home" size={30} color="#FFFF" />
         </Animated.View>
       </TouchableWithoutFeedback> 
     </LinearGradient> 
+
   const Diary = <LinearGradient 
       start={{ x: 0.35, y: 0 }} and end={{ x: 0, y: 0.95 }}
       locations={[0,0.25,0.95]} 
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
       style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: -35 }] }]}
     >
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={()=> chooseIcon("journal-whills")}>
         <Animated.View >
         <IconFA name="journal-whills" size={30} color="#FFFF" />
         </Animated.View>
@@ -109,7 +119,7 @@ export default function Nav (props) {
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
       style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 50 },  {translateX: -70 }] }]}
     >
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={()=> chooseIcon("tasks")}>
         <Animated.View >
         <IconFA name="tasks" size={30} color="#FFFF" />
         </Animated.View>
@@ -122,7 +132,7 @@ export default function Nav (props) {
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
       style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 200 },  {translateX: -70 }] }]}
     >
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={()=> chooseIcon("speaker-notes")}>
         <Animated.View >
         <IconMI name="speaker-notes" size={30} color="#FFFF" />
         </Animated.View>
@@ -135,7 +145,7 @@ export default function Nav (props) {
       colors={['#1C84E4','#1C84DB','#21D7FF']} 
       style={[styles.NavIconStyle, styles.secondary, {transform: [{ translateY: 275 },  {translateX: 0 }] }]}
     >
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={()=> chooseIcon("md-fast-food-outline")}>
         <Animated.View >
         <IconII name="md-fast-food-outline" size={30} color="#FFFF" />
         </Animated.View>
@@ -144,18 +154,18 @@ export default function Nav (props) {
 
     const NavIcon = <SafeAreaView style={[styles.IconsPageAre, props.style]}>
       {
-      // Open1? 
+      Open1? 
       [
-        Home1,
+        Home,
         Meal, 
         Note, 
         Task, 
         Diary
       ]
-      //  : console.log("is it working ")
+       : null
        }
       
-      {ChangeIcon ? AddIcon : Home}
+      {ChangeIcon ? AddIcon : SelectedPage}
     </SafeAreaView>
 
     return (NavIcon);
